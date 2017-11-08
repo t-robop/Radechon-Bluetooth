@@ -4,7 +4,7 @@ SoftwareSerial BT(10, 11);
 
 void setup(){
     BT.begin(9600);
-    Serial.begin(9600);
+    Serial.begin(38400);
   //右タイヤ
   pinMode(6,OUTPUT); //信号用ピン 5番ピン
   pinMode(7,OUTPUT); //信号用ピン 6番ピン
@@ -26,14 +26,13 @@ void loop(){
     // MAX_BLUETOOTH_SIZEバイトずつ読み込む
     for ( i=0; i<MAX_BLUETOOTH_SIZE; i++) {
       ch[i] = BT.read();
-      Serial.print(ch[i]);
+//      Serial.print("ch no atai"+ch[i]+" ch");
     }
 
   moterControl(ch);
   }
 }
-int RgihtVal = 140; //0~255の値にする
-int LeftVal = 180; //0~255の値にする
+
 
 void moterControl(String select){
   //Serial.print(select);
@@ -51,26 +50,27 @@ void moterControl(String select){
     int rightPower = rightPowerChar.toInt();
 
 Serial.print(action);
-
+  // 右タイヤ: ピン6,7
+  // 左タイヤ: ピン8,9
   
   // 前進
   if (action.equals("0001")){
     //右タイヤ
-    digitalWrite(6,LOW);
-    digitalWrite(7,HIGH);
+    digitalWrite(6,HIGH);
+    digitalWrite(7,LOW);
     //左タイヤ
-    digitalWrite(8,LOW);
-    digitalWrite(9,HIGH);
+    digitalWrite(8,HIGH);
+    digitalWrite(9,LOW);
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
     }
   
   else if (action.equals("0002")){
     //後退
-    digitalWrite(6,HIGH);
-    digitalWrite(7,LOW);
-    digitalWrite(8,HIGH);
-    digitalWrite(9,LOW);  
+    digitalWrite(6,LOW);
+    digitalWrite(7,HIGH);
+    digitalWrite(8,LOW);
+    digitalWrite(9,HIGH);  
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
 
@@ -80,9 +80,9 @@ Serial.print(action);
       //左回転
     //右タイヤ
     digitalWrite(6,LOW);
-    digitalWrite(7,HIGH);
+    digitalWrite(7,LOW);
     //左タイヤ
-    digitalWrite(8,LOW);
+    digitalWrite(8,HIGH);
     digitalWrite(9,LOW);
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
@@ -91,11 +91,11 @@ Serial.print(action);
   else if (action.equals("0004")){
     //右回転
     //右タイヤ
-    digitalWrite(6,LOW);
+    digitalWrite(6,HIGH);
     digitalWrite(7,LOW);
     //左タイヤ
     digitalWrite(8,LOW);
-    digitalWrite(9,HIGH);
+    digitalWrite(9,LOW);
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
   }
@@ -103,10 +103,10 @@ Serial.print(action);
   else if (action.equals("0005")){
 
     //後退
-    digitalWrite(6,HIGH);
-    digitalWrite(7,LOW);
-    digitalWrite(8,HIGH);
-    digitalWrite(9,LOW);  
+    digitalWrite(6,LOW);
+    digitalWrite(7,HIGH);
+    digitalWrite(8,LOW);
+    digitalWrite(9,HIGH);  
     analogWrite(3,100);
     analogWrite(5,100);
     delay(100);

@@ -55,10 +55,10 @@ Serial.print(action);
   
   // 前進
   if (action.equals("0001")){
-    //右タイヤ
+    //左タイヤ
     digitalWrite(6,HIGH);
     digitalWrite(7,LOW);
-    //左タイヤ
+    //右タイヤ
     digitalWrite(8,HIGH);
     digitalWrite(9,LOW);
     analogWrite(3,leftPower);
@@ -75,27 +75,31 @@ Serial.print(action);
     analogWrite(5,rightPower);
 
   }
-  
+
   else if (action.equals("0003")){
-      //左回転
-    //右タイヤ
-    digitalWrite(6,LOW);
-    digitalWrite(7,LOW);
+
+    //その場で左回転
     //左タイヤ
+    digitalWrite(6,LOW);
+    digitalWrite(7,HIGH);
+    //右タイヤ
     digitalWrite(8,HIGH);
     digitalWrite(9,LOW);
+
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
   }
-  
-  else if (action.equals("0004")){
-    //右回転
-    //右タイヤ
+
+  else if(action.equals("0004")){
+
+    //その場で右回転
+    //左回転
     digitalWrite(6,HIGH);
     digitalWrite(7,LOW);
-    //左タイヤ
+    //右回転
     digitalWrite(8,LOW);
-    digitalWrite(9,LOW);
+    digitalWrite(9,HIGH);
+
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
   }
@@ -113,6 +117,30 @@ Serial.print(action);
       //ストップ
     digitalWrite(6,LOW);
     digitalWrite(7,LOW);
+    digitalWrite(8,LOW);
+    digitalWrite(9,LOW);
+    analogWrite(3,leftPower);
+    analogWrite(5,rightPower);
+  }
+
+  else if (action.equals("0006")){
+    //タイヤを軸に左回転
+    //左タイヤ
+    digitalWrite(6,LOW);
+    digitalWrite(7,LOW);
+    //右タイヤ
+    digitalWrite(8,HIGH);
+    digitalWrite(9,LOW);
+    analogWrite(3,leftPower);
+    analogWrite(5,rightPower);
+  }
+  
+  else if (action.equals("0007")){
+    //タイヤを軸に右回転
+    //左タイヤ
+    digitalWrite(6,HIGH);
+    digitalWrite(7,LOW);
+    //右タイヤ
     digitalWrite(8,LOW);
     digitalWrite(9,LOW);
     analogWrite(3,leftPower);

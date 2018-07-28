@@ -13,9 +13,9 @@ void setup(){
   pinMode(9,OUTPUT); //信号用ピン 8番ピン
 
 }
+
 String btString;
-// なにをさせたいかが先頭4つ 次の3つが左側の速度 最後の3つが右側の速度
-int MAX_BLUETOOTH_SIZE = 10;
+int MAX_BLUETOOTH_SIZE = 7;
 
 
 void loop(){
@@ -26,7 +26,7 @@ void loop(){
     // MAX_BLUETOOTH_SIZEバイトずつ読み込む
     for ( i=0; i<MAX_BLUETOOTH_SIZE; i++) {
       ch[i] = BT.read();
-//      Serial.print("ch no atai"+ch[i]+" ch");
+      Serial.print(ch[i]);
     }
 
   moterControl(ch);
@@ -36,15 +36,14 @@ void loop(){
 
 void moterControl(String select){
   //Serial.print(select);
-    /* 10桁の配列から　
+    /* 7桁の配列から　
      * なにをさせたいかが先頭4つ 次の3つが左側の速度 最後の3つが右側の速度
-     * になるように分割 
-   * 例: 0001255125
-     * 前進 255 125
+   * 例: 1100100
+     * 前進 モーターパワー 左100 右100
      */
-    String action = select.substring(0,4);
-    String leftPowerChar = select.substring(4,7);
-    String rightPowerChar = select.substring(7,10);
+    String action = select.substring(0,1);
+    String leftPowerChar = select.substring(1,4);
+    String rightPowerChar = select.substring(4,7);
     // String配列をint型に変換
     int leftPower = leftPowerChar.toInt();
     int rightPower = rightPowerChar.toInt();
@@ -54,18 +53,22 @@ Serial.print(action);
   // 左タイヤ: ピン8,9
   
   // 前進
+<<<<<<< HEAD
+  if (action.equals("1")){
+=======
   if (action.equals("0001")){
-    //右タイヤ
+>>>>>>> 6e60be1f725ef099c6770baf6ebf0c27dfd26ea3
+    //左タイヤ
     digitalWrite(6,HIGH);
     digitalWrite(7,LOW);
-    //左タイヤ
+    //右タイヤ
     digitalWrite(8,HIGH);
     digitalWrite(9,LOW);
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
     }
   
-  else if (action.equals("0002")){
+  else if (action.equals("2")){
     //後退
     digitalWrite(6,LOW);
     digitalWrite(7,HIGH);
@@ -75,32 +78,44 @@ Serial.print(action);
     analogWrite(5,rightPower);
 
   }
-  
+
+<<<<<<< HEAD
+  else if (action.equals("3")){
+=======
   else if (action.equals("0003")){
-      //左回転
-    //右タイヤ
-    digitalWrite(6,LOW);
-    digitalWrite(7,LOW);
+>>>>>>> 6e60be1f725ef099c6770baf6ebf0c27dfd26ea3
+
+    //その場で左回転
     //左タイヤ
+    digitalWrite(6,LOW);
+    digitalWrite(7,HIGH);
+    //右タイヤ
     digitalWrite(8,HIGH);
     digitalWrite(9,LOW);
-    analogWrite(3,leftPower);
-    analogWrite(5,rightPower);
-  }
-  
-  else if (action.equals("0004")){
-    //右回転
-    //右タイヤ
-    digitalWrite(6,HIGH);
-    digitalWrite(7,LOW);
-    //左タイヤ
-    digitalWrite(8,LOW);
-    digitalWrite(9,LOW);
+
     analogWrite(3,leftPower);
     analogWrite(5,rightPower);
   }
 
-  else if (action.equals("0005")){
+<<<<<<< HEAD
+  else if(action.equals("4")){
+=======
+  else if(action.equals("0004")){
+>>>>>>> 6e60be1f725ef099c6770baf6ebf0c27dfd26ea3
+
+    //その場で右回転
+    //左回転
+    digitalWrite(6,HIGH);
+    digitalWrite(7,LOW);
+    //右回転
+    digitalWrite(8,LOW);
+    digitalWrite(9,HIGH);
+
+    analogWrite(3,leftPower);
+    analogWrite(5,rightPower);
+  }
+
+  else if (action.equals("5")){
 
     //後退
     digitalWrite(6,LOW);
@@ -113,6 +128,30 @@ Serial.print(action);
       //ストップ
     digitalWrite(6,LOW);
     digitalWrite(7,LOW);
+    digitalWrite(8,LOW);
+    digitalWrite(9,LOW);
+    analogWrite(3,leftPower);
+    analogWrite(5,rightPower);
+  }
+
+  else if (action.equals("0006")){
+    //タイヤを軸に左回転
+    //左タイヤ
+    digitalWrite(6,LOW);
+    digitalWrite(7,LOW);
+    //右タイヤ
+    digitalWrite(8,HIGH);
+    digitalWrite(9,LOW);
+    analogWrite(3,leftPower);
+    analogWrite(5,rightPower);
+  }
+  
+  else if (action.equals("0007")){
+    //タイヤを軸に右回転
+    //左タイヤ
+    digitalWrite(6,HIGH);
+    digitalWrite(7,LOW);
+    //右タイヤ
     digitalWrite(8,LOW);
     digitalWrite(9,LOW);
     analogWrite(3,leftPower);

@@ -49,8 +49,8 @@ void moterControl(String select){
     int rightPower = rightPowerChar.toInt();
 
 Serial.print(action);
-  // 右タイヤ: ピン6,7
-  // 左タイヤ: ピン8,9
+  // 左タイヤ: ピン6,7
+  // 右タイヤ: ピン8,9
   
   // 前進
   if (action.equals("1")){
